@@ -1,0 +1,33 @@
+body {
+  font-family: Helvetica;
+}
+
+section {
+  padding: .5em 1em;
+  font-size: 0.8em;
+}
+
+section, h5 {
+  margin: 1em 1em !important;
+}
+
+h5 {
+  margin-bottom: 1em;
+}
+
+.ui.small.labels .label, .ui.small.label {
+  font-size: 0.5rem;
+}
+
+.ui.list a {
+  text-decoration: none;
+}
+
+.item>.content {
+  margin-right: 1em;
+}
+
+.repo-tags {
+  display: inline-block;
+  font-size: 0.5em;
+}
