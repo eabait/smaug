@@ -2,17 +2,21 @@ body {
   font-family: Helvetica;
 }
 
-section {
-  padding: .5em 1em;
-  font-size: 0.8em;
+h5 {
+  margin-bottom: 1em;
 }
 
-section, h5 {
+.repo-list {
+  padding: .5em 1em;
+}
+
+.repo-list, h5 {
   margin: 1em 1em !important;
 }
 
-h5 {
-  margin-bottom: 1em;
+.repo-list > footer {
+  width: 100%;
+  text-align: center;
 }
 
 .ui.small.labels .label, .ui.small.label {
@@ -23,7 +27,7 @@ h5 {
   text-decoration: none;
 }
 
-.item>.content {
+.item > .content {
   margin-right: 1em;
 }
 
