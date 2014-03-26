@@ -1,4 +1,11 @@
-var Application = angular.module('app', ['restangular', 'ngRoute']);
+var Application = angular.module(
+  'app',
+  [
+    'restangular',
+    'ngRoute',
+    'chieffancypants.loadingBar'
+  ]
+);
 
 Application.config(function(RestangularProvider) {
   RestangularProvider.setBaseUrl('http://127.0.0.1:3000');//'http://smaug-eabait.rhcloud.com'
@@ -14,4 +21,5 @@ Application.config(['$routeProvider',
       otherwise({
         redirectTo: '/repository'
       });
-  }]);
+  }]
+);
