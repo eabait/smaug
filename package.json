@@ -1,0 +1,35 @@
+{
+  "name": "smaug-api",
+  "version": "0.0.1",
+  "description": "Smaug web-services",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eabait/smaug"
+  },
+  "keywords": [
+    "github",
+    "repositories",
+    "tags",
+    "management",
+    "organize"
+  ],
+  "author": "eabait",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eabait/smaug/issues"
+  },
+  "dependencies": {
+    "express": "~3.5.0",
+    "mongoose": "~3.8.8",
+    "octonode": "~0.5.1",
+    "express3-handlebars": "~0.5.0",
+    "body-parser": "~1.0.1",
+    "cookie-parser": "~1.0.1",
+    "cookies": "~0.4.0",
+    "express-session": "~1.0.2"
+  }
+}

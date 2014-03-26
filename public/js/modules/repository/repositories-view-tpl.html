@@ -1,0 +1,17 @@
+<h5 class="ui red header">
+  Tag your repos to keep them organized
+</h5>
+
+<section class="repo-list" ng-controller="RepositoryController">
+  <section class="ui relaxed divided list">
+    <repository ng-repeat="repository in repositories"/>
+  </section>
+  <footer>
+    <div class="ui horizontal icon divider">
+      <i class="circular github icon"></i>
+    </div>
+    <div class="mini ui red button">
+      <i class="add sign box icon"></i> Load more...
+    </div>
+  </footer>
+</section>

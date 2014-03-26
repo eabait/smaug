@@ -1,7 +1,7 @@
 Application.factory('RepositoryService', function(Restangular) {
 
   function findAllStarredByUser(user) {
-    var baseAccounts = Restangular.all('users/' + user + '/starred');
+    var baseAccounts = Restangular.all('starred');
     return baseAccounts
       .getList()
       .then(function(repositories) {

@@ -1,9 +1,19 @@
+html {
+  height: 100%;
+}
+
 body {
+  width: 100%;
+  height: 100%;
   font-family: Helvetica;
 }
 
 h5 {
   margin-bottom: 1em;
+}
+
+.login {
+  margin: 20% !important;
 }
 
 .repo-list {
