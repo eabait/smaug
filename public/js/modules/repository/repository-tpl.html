@@ -8,10 +8,10 @@
   <a class="right floated item">
     <i class="plus icon" data-content="Tag me" popup></i>
   </a>
-  <img class="ui avatar image" src="{{repository.avatarUrl}}">
+  <img class="ui avatar image" ng-src="{{repository.avatarUrl}}">
   <div class="content">
     <div class="header">
-    <a href="{{repository.repositoryUrl}}" target="_blank">{{repository.name}}</a>
+    <a ng-href="{{repository.repositoryUrl}}" target="_blank">{{repository.name}}</a>
     </div>
   </div>
 <!--   <div class="repo-tags ui black small labels">
