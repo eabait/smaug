@@ -1,85 +1,53 @@
 
 var express = require('express'),
     bodyParser = require('body-parser'),
-    github = require('octonode'),
-    Config = require('./config.js'),
     exphbs  = require('express3-handlebars'),
     session = require('express-session'),
-    cookieParser = require('cookie-parser');
+    cookieParser = require('cookie-parser'),
+    Config = require('./config'),
+    authenticationApi = require('./api/authentication'),
+    repositoryApi = require('./api/repository'),
+    mongoose = require('mongoose'),
+    MongoStore = require('connect-mongo')(express);
 
-var app = express();
+var app = express(),
+    db,
+    serverPort,
+    serverIpAddress;
 
 app.use(express.logger());
 app.use(bodyParser());
 app.use(cookieParser());
-app.use(session({secret: '_1nd14n4j0n3s:1984_'}));
-app.use(app.router);
-app.use(express.static(__dirname + '/public'));
 
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
+mongoose.connect('mongodb://' + Config.MONGO_USERNAME + ':' + Config.MONGO_PASS +
+  '@' + Config.MONGO_HOST + ':' + Config.MONGO_PORT + '/smaug');
 
-var authUrl = github.auth
-  .config({
-    id: Config.GITHUB_CLIENT_ID,
-    secret: Config.GITHUB_CLIENT_SECRET
-  })
-  .login(['user', 'repo', 'gist']);
- var state = authUrl.match(/&state=([0-9a-z]{32})/i);
+db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  app.use(express.session({
+    secret: '_1nd14n4j0n3s:1984_',
+    store: new MongoStore({
+      mongoose_connection: db
+    })
+  }));
 
-app.get(
-  '/',
-  function(req, res) {
-    if (req.session.token) {
-      res.render('index', {
-        layout: false
-      });
-    } else {
-      if (req.query.state && (!state || state[1] != req.query.state)) {
-        res.json(403);
-      } else {
-        if (req.query.code) {
-          github.auth.login(req.query.code, function (err, token) {
-            req.session.token = token;
-            res.redirect('/');
-          });
-        } else {
-          res.render('login', {
-            layout: false,
-            oauthUrl: authUrl
-          });
-        }
-      }
-    }
-  }
-);
+  app.use(app.router);
+  app.use(express.static(__dirname + '/public'));
 
-app.get(
-  '/logout',
-  function(req, res) {
-    req.session.destroy();
-    res.redirect('/');
-  }
-);
+  app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+  app.set('view engine', 'handlebars');
 
-app.get(
-  '/starred',
-  function(req, res) {
-    var token = req.session.token;
-    var gitHubClient = github.client(token).me();
-    gitHubClient.starred(function(err, data, headers) {
-      if (err) {
-        res.json(401, err);
-      } else{
-        res.json(200, data);
-      }
-    });
-  }
-);
+  app.get('/', authenticationApi.index);
+  app.get('/logout', authenticationApi.logout);
+  app.get('/repository/starred', repositoryApi.starred);
+  app.put('/repository/:id/tag', repositoryApi.addTag);
 
-var serverPort = process.env.OPENSHIFT_NODEJS_PORT || 3000;
-var serverIpAddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+  serverPort = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+  serverIpAddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
-app.listen(serverPort, serverIpAddress, function () {
-  console.log('Listening on ' + serverIpAddress + ', port ' + serverPort);
+  app.listen(serverPort, serverIpAddress, function () {
+    console.log('Listening on ' + serverIpAddress + ', port ' + serverPort);
+  });
 });
+

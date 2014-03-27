@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <title>SMAUG - manage your GitHub repositories</title>
+    <title>SMAUG - Manage your GitHub repositories</title>
     <link rel="stylesheet" href="vendor/normalize.css/normalize.css">
     <link rel="stylesheet" href="vendor/semantic-ui/build/packaged/css/semantic.min.css">
     <link rel="stylesheet" href="vendor/angular-loading-bar/build/loading-bar.css">
@@ -20,6 +20,7 @@
 
     <script src="js/app.js"></script>
     <script src="js/widgets/popup-directive.js"></script>
+    <script src="js/widgets/model-undefined-directive.js"></script>
     <script src="js/app-controller.js"></script>
     <script src="js/modules/repository/repository-controller.js"></script>
     <script src="js/modules/repository/repository-service.js"></script>
@@ -34,6 +35,9 @@
         <i class="bookmark icon" data-content="Browser your tags" popup></i>
       </a>
       <div class="right menu">
+        <a ng-href="/logout" class="ui item visible content">
+          <i class="twitter sign icon" data-content="Share the love!" data-position="bottom center" popup></i>
+        </a>
         <a ng-href="/logout" class="ui item visible content">
           <i class="sign out icon" data-content="Logout" data-position="bottom center" popup></i>
         </a>

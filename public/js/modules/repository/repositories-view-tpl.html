@@ -3,15 +3,19 @@
 </h5>
 
 <section class="repo-list" ng-controller="RepositoryController">
+  <section class="ui icon input">
+    <input type="text" placeholder="Search by tag name" ng-model="search.tags" model-undefined>
+    <i class="search icon"></i>
+  </section>
   <section class="ui relaxed divided list">
-    <repository ng-repeat="repository in repositories"/>
+    <repository ng-repeat="repository in repositories | filter:search:strict"/>
   </section>
   <footer>
     <div class="ui horizontal icon divider">
       <i class="circular github icon"></i>
     </div>
-    <div class="mini ui red button">
-      <i class="add sign box icon"></i> Load more...
+    <div class="ui red button" ng-click="loadMore()">
+      More
     </div>
   </footer>
 </section>
