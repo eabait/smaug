@@ -21,14 +21,14 @@ h5 {
 }
 
 .menu-avatar {
-  padding: .3em;
+  padding: .3em !important;
 }
 
 .repo-list, .tag-list {
   padding: .5em 1em;
 }
 
-.repo-list, h5 {
+.repo-list, .tag-list {
   margin: 1em 1em !important;
 }
 
