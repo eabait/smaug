@@ -8,7 +8,8 @@ var express = require('express'),
     authenticationApi = require('./api/authentication'),
     repositoryApi = require('./api/repository'),
     mongoose = require('mongoose'),
-    MongoStore = require('connect-mongo')(express);
+    MongoStore = require('connect-mongo')(express),
+    tagApi = require('./api/tag');
 
 var app = express(),
     db,
@@ -42,6 +43,7 @@ db.once('open', function() {
   app.get('/logout', authenticationApi.logout);
   app.get('/repository/starred', repositoryApi.starred);
   app.put('/repository/:id/tag', repositoryApi.addTag);
+  app.get('/tag', tagApi.tagList);
 
   serverPort = process.env.OPENSHIFT_NODEJS_PORT || 3000;
   serverIpAddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';

@@ -1,0 +1,11 @@
+<section class="tag-list" ng-controller="TagController">
+  <div class="ui horizontal list">
+    <div class="item" ng-repeat="tag in tags">
+      <div class="ui label">
+        {{tag._id}}
+        <div class="detail">{{tag.count}}</div>
+        <i class="delete icon"></i>
+      </div>
+    </div>
+  </div>
+</section>

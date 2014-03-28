@@ -18,6 +18,10 @@ Application.config(['$routeProvider',
         templateUrl: 'js/modules/repository/repositories-view-tpl.html',
         controller: 'RepositoryController'
       }).
+      when('/tag', {
+        templateUrl: 'js/modules/tag/tags-view-tpl.html',
+        controller: 'TagController'
+      }).
       otherwise({
         redirectTo: '/repository'
       });

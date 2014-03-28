@@ -25,15 +25,14 @@
     <script src="js/modules/repository/repository-controller.js"></script>
     <script src="js/modules/repository/repository-service.js"></script>
     <script src="js/modules/repository/repository-directive.js"></script>
+    <script src="js/modules/tag/tag-controller.js"></script>
+    <script src="js/modules/tag/tag-service.js"></script>
   </head>
   <body ng-controller="ApplicationController">
     <nav class="ui inverted red menu">
-      <a class="active item">
-        <i class="folder icon" data-content="Browse your repositories" data-position="bottom center" popup></i>
-      </a>
-      <a class="item">
-        <i class="bookmark icon" data-content="Browser your tags" popup></i>
-      </a>
+      <div class="menu-avatar item">
+        <img src="https://avatars.githubusercontent.com/u/1002551?" class="ui avatar image"> Welcome <a href="https://github.com/eabait">eabait</a>
+      </div>
       <div class="right menu">
         <a ng-href="/logout" class="ui item visible content">
           <i class="twitter sign icon" data-content="Share the love!" data-position="bottom center" popup></i>
@@ -42,6 +41,14 @@
           <i class="sign out icon" data-content="Logout" data-position="bottom center" popup></i>
         </a>
       </div>
+    </nav>
+    <nav class="ui secondary pointing menu app-submenu">
+      <a href="#/repository" class="active item">
+        <i class="folder icon" data-content="Browse your repositories" data-position="bottom center" popup></i> Repositories
+      </a>
+      <a href="#/tag" class="item">
+        <i class="bookmark icon" data-content="Browser your tags" popup></i> Tags
+      </a>
     </nav>
 
     <div ng-view></div>

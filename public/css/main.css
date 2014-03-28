@@ -16,7 +16,15 @@ h5 {
   margin: 20% !important;
 }
 
-.repo-list {
+.app-submenu {
+  text-transform: uppercase;
+}
+
+.menu-avatar {
+  padding: .3em;
+}
+
+.repo-list, .tag-list {
   padding: .5em 1em;
 }
 

@@ -74,7 +74,12 @@ module.exports.addTag = function(req, res) {
             repository.tags = _.union(repository.tags, newTags);
           } else {
             if (!err && !repository) {
-              repository = new Repository({id: repoId, _creator: user._id, tags: newTags});
+              repository = new Repository({
+                id: repoId,
+                _creator: user._id,
+                ghUserId: ghUserId,
+                tags: newTags
+              });
               user.repositories.push(repository);
               user.save();
             }
