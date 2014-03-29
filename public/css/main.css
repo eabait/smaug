@@ -24,12 +24,9 @@ h5 {
   padding: .3em !important;
 }
 
-.repo-list, .tag-list {
-  padding: .5em 1em;
-}
-
-.repo-list, .tag-list {
+.main-container {
   margin: 1em 1em !important;
+  padding: .5em 1em;
 }
 
 .repo-list > footer {

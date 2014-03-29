@@ -1,0 +1,12 @@
+<section class="ui red segment" ng-controller="AddTagController" ng-model="addedTags">
+  <h3 class="ui red header">{{repository.name}}</h3>
+  <p>{{repository.description}}</p>
+  <form name="tagform" class="ui form">
+    <div class="field">
+        <input class="tagmanager" source="srcTags" output="addedTags" type="text" placeholder="Add tags!" name="tag">
+    </div>
+    <button class="ui field red icon button" ng-click="tagRepository()">
+      <i class="bookmark icon"></i> Tag me!
+    </button>
+  </form>
+</section>

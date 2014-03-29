@@ -1,4 +1,4 @@
-Application.controller('TagController', [
+Application.controller('ListTagController', [
   '$scope',
   'TagService',
   function($scope, TagService) {

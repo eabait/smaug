@@ -5,8 +5,8 @@
   <a class="right floated item">
     <i class="unhide icon" data-content="Unfollow me" popup></i>
   </a>
-  <a class="right floated item">
-    <i class="plus icon" ng-click="addTag(repository)" data-content="Tag me" popup></i>
+  <a ng-href="#/repository/{{repository.id}}/tag/add" class="right floated item">
+    <i class="plus icon" data-content="Tag me" popup></i>
   </a>
   <img class="ui avatar image" ng-src="{{repository.owner.avatar_url}}">
   <div class="content">
@@ -15,7 +15,7 @@
     </div>
   </div>
   <div class="repo-tags ui black small labels">
-    <div class="ui label" ng-repeat="tag in repository.tags">
+    <div class="ui label" ng-model="repository.tags" ng-repeat="tag in repository.tags">
       {{tag}} <i class="icon close"></i>
     </div>
   </div>

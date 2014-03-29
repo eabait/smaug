@@ -44,7 +44,7 @@ module.exports.starred = function(req, res) {
   var page = req.query.page ? req.query.page : 1;
   var gitHubClient = github.client(token).me();
 
-  gitHubClient.starred(function(err, data, headers) {
+  gitHubClient.starred(page, function(err, data, headers) {
     if (err) {
       res.json(500, err);
     } else {

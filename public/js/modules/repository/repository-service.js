@@ -1,25 +1,23 @@
-Application.factory('RepositoryService', function(Restangular) {
+Application.service('RepositoryService', function(Restangular) {
 
-  function findAllStarredRepositories(page) {
-    var baseAccounts = Restangular.all('repository/starred');
-    return baseAccounts
+  this.repositories = [];
+
+  this.findAllRepositories = function(page) {
+    var baseRepositories = Restangular.all('repository/starred');
+    return baseRepositories
       .getList({
         page: page
       })
-      .then(function(repositories) {
+      .then(_.bind(function(repositories) {
+        this.repositories = _.union(this.repositories, repositories);
         return repositories;
-      });
-  }
+      }, this));
+  };
 
-  function addTag(repositoryId, tags) {
-    var repository = Restangular.one('repository', repositoryId).one('tag');
-    repository.tags = tags;
-    return repository.put();
-  }
-
-  return {
-    findAllStarredRepositories: findAllStarredRepositories,
-    addTag: addTag
+  this.findRepository = function(repositoryId) {
+    return _.findWhere(this.repositories, {
+      id: +repositoryId
+    });
   }
 
 });
