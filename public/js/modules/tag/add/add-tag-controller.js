@@ -7,11 +7,10 @@ Application.controller('AddTagController', [
   function($scope, $routeParams, $locationProvider, RepositoryService, TagService) {
     $scope.repository = RepositoryService.findRepository($routeParams.id);
     $scope.srcTags = _.union($scope.repository.description.split(' '));
-    $scope.addedTags = [];
 
-    $scope.tagRepository = function() {
-      $scope.repository.tags = _.union($scope.repository.tags, $scope.addedTags);
-      TagService.tagRepository($scope.repository.id, $scope.addedTags);
+    $scope.addTagToRepository = function(addedTags) {
+      $scope.repository.tags = _.union($scope.repository.tags, addedTags);
+      TagService.tagRepository($scope.repository.id, addedTags);
       $locationProvider.path('#/repository');
     };
   }

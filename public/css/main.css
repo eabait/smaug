@@ -54,3 +54,25 @@ nav .item {
 .tag-container {
   margin: 1em 0 0 0;
 }
+
+.tm-tag {
+  display: inline-block;
+  vertical-align: middle;
+  margin: -0.25em 0.25em 0.4em 0em;
+  padding: 0.5em 0.8em;
+  font-weight: normal;
+  border-radius: 0.325em;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  background-color: #5C6166!important;
+  border-color: #5C6166!important;
+  color: #FFF!important;
+}
+
+.tt-dropdown-menu {
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(0,0,0,.15);
+  width: 100%;
+}

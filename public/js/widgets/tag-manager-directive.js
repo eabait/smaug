@@ -1,7 +1,8 @@
 Application.directive('tagmanager', function() {
 
   function link(scope, element, attrs) {
-    $(element).tagsManager();
+    var tagInput = element.find('input[name="tag"]');
+    $(tagInput).tagsManager();
 
     var tags = new Bloodhound({
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
@@ -15,12 +16,13 @@ Application.directive('tagmanager', function() {
 
     tags.initialize();
 
-    $(element)
+    $(tagInput)
       .typeahead(
         {
           hint: true,
           highlight: true,
-          minLength: 2
+          minLength: 1,
+          tagClass: 'ui label'
         },
         {
           name: 'tags',
@@ -29,19 +31,26 @@ Application.directive('tagmanager', function() {
         }
       )
       .on('typeahead:selected', function (e, d) {
-        $(element).tagsManager('pushTag', d.name);
-        scope.tagOutput.push(d.name);
+        $(tagInput).tagsManager('pushTag', d.name);
+      });
+
+    $(element)
+      .find('.button')
+      .on('click', function() {
+        var tags = $('input[type="hidden"]').val();
+        scope.tagAction(tags.split(','));
       });
   }
 
   return {
-    restrict: 'C',
+    restrict: 'A',
 
     link: link,
 
     scope: {
       tagSource: '=source',
-      tagOutput: '=output'
+      tagOutput: '=output',
+      tagAction: '=tagaction'
     }
   }
 });
