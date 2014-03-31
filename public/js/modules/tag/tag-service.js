@@ -9,12 +9,18 @@ Application.factory('TagService', function(Restangular) {
     return repository.put();
   }
 
-  function listTag() {
-    return this.tags;
+  function findAllTags() {
+    var baseTags = Restangular.all('tag');
+    return baseTags
+      .getList()
+      .then(_.bind(function(tags) {
+        this.tags = tags;
+        return this.tags;
+      }, this));
   }
 
   return {
-    listTag: listTag,
+    findAllTags: findAllTags,
     tagRepository: tagRepository
   }
 

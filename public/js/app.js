@@ -3,16 +3,16 @@ var Application = angular.module(
   [
     'restangular',
     'ngRoute',
-    'chieffancypants.loadingBar',
-    'ngCookies'
+    'chieffancypants.loadingBar'
   ]
 );
 
-Application.config(function(RestangularProvider) {
+Application.config(function(RestangularProvider, cfpLoadingBarProvider) {
   RestangularProvider.setBaseUrl('http://127.0.0.1:3000');//'http://smaug-eabait.rhcloud.com'
   RestangularProvider.setDefaultHttpFields({
     cache: false
   });
+  cfpLoadingBarProvider.includeSpinner = false;
 });
 
 Application.config(['$routeProvider',

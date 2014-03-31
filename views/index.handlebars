@@ -36,12 +36,12 @@
     <script src="js/modules/tag/tag-service.js"></script>
   </head>
   <body>
-    <nav class="ui inverted red menu">
+    <nav class="ui inverted red menu" ng-init="selected=1">
       <a href="https://github.com/{{userName}}" class="menu-avatar item" data-content="Logged as {{userName}}" popup><img ng-src="{{userAvatar}}" class="ui avatar image"></a>
-      <a href="#/repository" class="active item">
+      <a href="#/repository" class="item" ng-click="selected = 1" ng-class="{'active' : selected == 1}">
         <i class="folder icon" data-content="Browse your repositories" data-position="bottom center" popup></i> Repositories
       </a>
-      <a href="#/tag" class="item">
+      <a href="#/tag" class="item" ng-click="selected = 2" ng-class="{'active' : selected == 2}">
         <i class="bookmark icon" data-content="Browser your tags" popup></i> Tags
       </a>
 

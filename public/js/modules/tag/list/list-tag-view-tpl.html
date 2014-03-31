@@ -1,6 +1,11 @@
 <section class="tag-list" ng-controller="ListTagController">
-  <div class="ui horizontal list">
-    <div class="item" ng-repeat="tag in tags">
+  <section class="ui fluid icon input">
+    <input type="text" placeholder="Search by tag name" ng-model="search" model-undefined>
+    <i class="search icon"></i>
+  </section>
+  <div class="ui list tag-container">
+    <div class="ui loader" ng-class="{true: 'disabled', false: 'active'}[ tags.length > 0]"></div>
+    <div class="item" ng-repeat="tag in tags | filter:search:strict">
       <div class="ui label">
         {{tag._id}}
         <div class="detail">{{tag.count}}</div>

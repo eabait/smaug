@@ -50,3 +50,7 @@ nav .item {
   display: inline-block;
   font-size: 0.5em;
 }
+
+.tag-container {
+  margin: 1em 0 0 0;
+}

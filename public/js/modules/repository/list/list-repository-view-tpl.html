@@ -4,9 +4,10 @@
     <i class="search icon"></i>
   </section>
   <section class="ui relaxed divided list">
+    <div class="ui loader" ng-class="{true: 'disabled', false: 'active'}[repositories.length > 0]"></div>
     <repository ng-repeat="repository in repositories | filter:search:strict"/>
   </section>
-  <footer>
+  <footer ng-show="repositories.length > 0">
     <div class="ui horizontal icon divider">
       <i class="circular github icon"></i>
     </div>
