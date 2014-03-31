@@ -1,21 +1,38 @@
-Application.service('RepositoryService', function(Restangular) {
+Application.service('RepositoryService', function($q, Restangular) {
 
-  this.repositories = [];
+  this.repositoryCache = {};
 
   this.findAllRepositories = function(page) {
+    var promiseOnFindAllRepositories = $q.defer();
     var baseRepositories = Restangular.all('repository/starred');
-    return baseRepositories
+
+    if (this.repositoryCache[page]) {
+      promiseOnFindAllRepositories.resolve(this.repositoryCache[page]);
+    }
+
+    baseRepositories
       .getList({
         page: page
       })
-      .then(_.bind(function(repositories) {
-        this.repositories = _.union(this.repositories, repositories);
-        return repositories;
-      }, this));
+      .then(
+        _.bind(
+          function(repositories) {
+            this.repositoryCache[page] = _.union(this.repositories, repositories);
+            promiseOnFindAllRepositories.resolve(this.repositoryCache[page]);
+          },
+          this
+        ),
+        function() {
+          promiseOnFindAllRepositories.reject();
+        }
+      );
+
+    return promiseOnFindAllRepositories.promise;
   };
 
   this.findRepository = function(repositoryId) {
-    return _.findWhere(this.repositories, {
+    var repositories = _.values(this.repositoryCache)[0];
+    return _.findWhere(repositories, {
       id: +repositoryId
     });
   }

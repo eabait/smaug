@@ -4,13 +4,12 @@ Application.controller('ListRepositoryController', [
   'RepositoryService',
   function($scope, window, RepositoryService) {
 
-    $scope.repositories = [];
     $scope.page = 1;
-
+    $scope.repositories = [];
     RepositoryService
       .findAllRepositories($scope.page)
       .then(function(repositories) {
-        $scope.repositories = repositories;
+        $scope.repositories = repositories
       });
 
     $scope.loadMore = function() {
