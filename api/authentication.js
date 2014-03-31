@@ -14,6 +14,8 @@ var state = authUrl.match(/&state=([0-9a-z]{32})/i);
 module.exports.index = function(req, res) {
   if (req.session.token) {
     res.render('index', {
+      userName: req.session.userName,
+      userAvatar: req.session.userAvatar,
       layout: false
     });
   } else {
@@ -25,6 +27,8 @@ module.exports.index = function(req, res) {
           req.session.token = token;
           github.client(token).me().info(function(err, data, headers) {
             req.session.ghUserId = data.id;
+            req.session.userName = data.login;
+            req.session.userAvatar = data.avatar_url;
             req.session.save(function(err) {
               res.redirect('/');
             });

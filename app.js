@@ -27,10 +27,14 @@ db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   app.use(express.session({
+    key: 'smaug.id',
     secret: '_1nd14n4j0n3s:1984_',
     store: new MongoStore({
       mongoose_connection: db
-    })
+    }),
+    cookie: {
+      httpOnly: false
+    }
   }));
 
   app.use(app.router);

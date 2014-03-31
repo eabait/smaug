@@ -7,13 +7,11 @@ Application.controller('ListRepositoryController', [
     $scope.repositories = [];
     $scope.page = 1;
 
-    // $scope.load = function() {
-      RepositoryService
-        .findAllRepositories($scope.page)
-        .then(function(repositories) {
-          $scope.repositories = repositories;
-        });
-    // };
+    RepositoryService
+      .findAllRepositories($scope.page)
+      .then(function(repositories) {
+        $scope.repositories = repositories;
+      });
 
     $scope.loadMore = function() {
       $scope.page = $scope.page + 1;
@@ -24,8 +22,5 @@ Application.controller('ListRepositoryController', [
         });
     };
 
-    $scope.alert = function(tag) {
-      console.log(JSON.stringify(tag));
-    };
   }]
 );

@@ -16,7 +16,7 @@ h5 {
   margin: 20% !important;
 }
 
-.app-submenu {
+nav .item {
   text-transform: uppercase;
 }
 
