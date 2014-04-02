@@ -47,7 +47,8 @@ db.once('open', function() {
   app.get('/logout', authenticationApi.logout);
   app.get('/repository/starred', repositoryApi.starred);
   app.put('/repository/:id/tag', repositoryApi.addTag);
-  app.get('/tag', tagApi.tagList);
+  app.get('/repository/tag/:id', tagApi.findRepositoriesByTag);
+  app.get('/tag', tagApi.findAllTags);
 
   serverPort = process.env.OPENSHIFT_NODEJS_PORT || 3000;
   serverIpAddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';

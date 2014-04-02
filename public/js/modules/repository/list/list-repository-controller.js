@@ -6,11 +6,14 @@ Application.controller('ListRepositoryController', [
 
     $scope.page = 1;
     $scope.repositories = [];
-    RepositoryService
-      .findAllRepositories($scope.page)
-      .then(function(repositories) {
-        $scope.repositories = repositories
-      });
+
+    $scope.initialLoad = function() {
+      RepositoryService
+        .findAllRepositories($scope.page)
+        .then(function(repositories) {
+          $scope.repositories = repositories
+        });
+    };
 
     $scope.loadMore = function() {
       $scope.page = $scope.page + 1;

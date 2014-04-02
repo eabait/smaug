@@ -1,4 +1,4 @@
-<section class="repo-list" ng-controller="ListRepositoryController">
+<section class="repo-list" ng-controller="ListRepositoryController" ng-init="initialLoad()">
   <section class="ui fluid icon input">
     <input type="text" placeholder="Search by tag name" ng-model="search.tags" model-undefined>
     <i class="search icon"></i>

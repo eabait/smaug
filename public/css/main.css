@@ -20,6 +20,10 @@ nav .item {
   text-transform: uppercase;
 }
 
+.label {
+  cursor: pointer !important;
+}
+
 .menu-avatar {
   padding: .3em !important;
 }

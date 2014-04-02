@@ -8,7 +8,7 @@ var authUrl = github.auth
     id: Config.GITHUB_CLIENT_ID,
     secret: Config.GITHUB_CLIENT_SECRET
   })
-  .login(['user', 'repo', 'gist']);
+  .login(['user', 'repo']);
 var state = authUrl.match(/&state=([0-9a-z]{32})/i);
 
 module.exports.index = function(req, res) {
@@ -29,15 +29,18 @@ module.exports.index = function(req, res) {
             req.session.ghUserId = data.id;
             req.session.userName = data.login;
             req.session.userAvatar = data.avatar_url;
-            req.session.save(function(err) {
-              res.redirect('/');
-            });
 
             var User = mongoose.model('User', UserSchema);
             newUser = new User({
-              id: data.id
+              id: data.id,
+              userName: data.login,
+              userAvatar: data.avatar_url
             });
-            newUser.save();
+            newUser.save(function() {
+              req.session.save(function(err) {
+                res.redirect('/');
+              });
+            });
           });
         });
       } else {

@@ -3,6 +3,8 @@ var mongoose = require('mongoose'),
 
 var UserSchema = mongoose.Schema({
   id: String,
+  userName: String,
+  userAvatar: String,
   repositories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Repository' }]
 });
 
