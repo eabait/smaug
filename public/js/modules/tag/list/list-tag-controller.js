@@ -7,11 +7,15 @@ Application.controller('ListTagController', [
     $scope.tags = [];
     $scope.loading = false;
 
-    TagService
-      .findAllTags()
-      .then(function(tags) {
-        $scope.tags = tags;
-      });
+    $scope.initialLoad = function() {
+      $scope.loading = true;
+      TagService
+        .findAllTags()
+        .then(function(tags) {
+          $scope.loading = false;
+          $scope.tags = tags;
+        });
+    };
 
     $scope.onTagClick = function(tag) {
       $scope.loading = true;
@@ -21,6 +25,6 @@ Application.controller('ListTagController', [
           $scope.repositories = repositories;
           $scope.loading = false;
         });
-    }
+    };
   }
 ]);

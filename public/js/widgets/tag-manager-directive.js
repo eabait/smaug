@@ -38,6 +38,7 @@ Application.directive('tagmanager', function() {
       .find('.button')
       .on('click', function() {
         var tags = $('input[type="hidden"]').val();
+        tags = tags.toLowerCase();
         scope.tagAction(tags.split(','));
       });
   }

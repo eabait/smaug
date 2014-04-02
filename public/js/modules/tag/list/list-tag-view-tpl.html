@@ -1,11 +1,11 @@
-<section class="tag-list ui grid" ng-controller="ListTagController">
+<section class="tag-list ui grid" ng-controller="ListTagController" ng-init="initialLoad()">
   <aside class="four wide column">
     <section class="ui icon input ">
       <input type="text" placeholder="Search by tag name" ng-model="search" model-undefined>
       <i class="search icon"></i>
     </section>
     <div class="ui list tag-container">
-      <div class="ui loader" ng-class="{true: 'disabled', false: 'active'}[ tags.length > 0]"></div>
+      <div class="ui loader" ng-class="{false: 'disabled', true: 'active'}[ loading]"></div>
       <div class="item" ng-repeat="tag in tags | filter:search:strict">
         <div class="ui small black label" ng-click="onTagClick(tag._id)">
           {{tag._id}}

@@ -22,6 +22,9 @@ module.exports.findAllTags = function(req, res) {
         $sum: 1
       }
     })
+    .sort({
+      count: 'desc'
+    })
     .exec(function(err, result) {
       res.json(200, result);
     });

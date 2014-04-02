@@ -9,9 +9,14 @@ Application.controller('AddTagController', [
     $scope.srcTags = _.union($scope.repository.description.split(' '));
 
     $scope.addTagToRepository = function(addedTags) {
-      $scope.repository.tags = _.union($scope.repository.tags, addedTags);
-      TagService.tagRepository($scope.repository.full_name, addedTags);
-      $locationProvider.path('#/repository');
+      addedTags = _.filter(addedTags, function(tag) {
+        return !!tag;
+      });
+      if (addedTags.length > 0) {
+        $scope.repository.tags = _.union($scope.repository.tags, addedTags);
+        TagService.tagRepository($scope.repository.full_name, addedTags);
+        $locationProvider.path('#/repository');
+      }
     };
   }
 ]);
