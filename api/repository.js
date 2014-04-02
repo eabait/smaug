@@ -99,3 +99,48 @@ module.exports.addTag = function(req, res) {
         });
     });
 };
+
+module.exports.unStarRepository = function(req, res) {
+  var userName = req.session.userName;
+  var repoName = req.params.owner + '/' + req.params.name;
+  var token = req.session.token;
+  var gitHubClient = github.client(token).me();
+
+  var User = mongoose.model('User', UserSchema);
+  var Repository = mongoose.model('Repository', RepositorySchema);
+
+  gitHubClient.unstar(repoName);
+  Repository
+    .findOne({
+      name: repoName,
+      userName: userName
+    })
+    .remove(function(removeRepositoryError, repo) {
+      if (removeRepositoryError) {
+        res.json(200, {
+          removedRepository: false,
+          updatedUser: false,
+          error: removeRepositoryError
+        });
+      } else {
+        User
+          .update(
+            {
+              userName: userName
+            },
+            {
+              $pull: {
+                repositories: repo._id
+              }
+            },
+            function(updateUserError, numberAffected, raw) {
+              res.json(200, {
+                removedRepository: true,
+                updatedUser: !!updateUserError,
+                error: updateUserError
+              });
+            }
+          );
+      }
+    });
+};

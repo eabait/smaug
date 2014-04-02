@@ -46,6 +46,7 @@ db.once('open', function() {
   app.get('/', authenticationApi.index);
   app.get('/logout', authenticationApi.logout);
   app.get('/repository/starred', repositoryApi.starred);
+  app.delete('/repository/starred/:owner/:name', repositoryApi.unStarRepository);
   app.put('/repository/:id/tag', repositoryApi.addTag);
   app.get('/repository/tag/:id', tagApi.findRepositoriesByTag);
   app.get('/tag', tagApi.findAllTags);

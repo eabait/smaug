@@ -71,4 +71,22 @@ Application.service('RepositoryService', function($q, Restangular) {
     return promiseOnFindTaggedRepositories.promise;
   };
 
+  this.unStarRepository = function(owner, name) {
+    var baseRepositories = Restangular.one('repository/starred');
+    return baseRepositories
+      .one(owner)
+      .one(name)
+      .remove()
+      .then(_.bind(function() {
+        var removeIndex = -1;
+        var toRemove = _.each(this.repositoryCache, function(repository, index) {
+          if (repository.full_name === owner + '/' + name) {
+            removeIndex = index;
+          }
+        });
+        this.repositoryCache.splice(removeIndex, 1);
+        return removeIndex;
+      }, this));
+  };
+
 });

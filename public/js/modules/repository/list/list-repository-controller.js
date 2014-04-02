@@ -24,5 +24,11 @@ Application.controller('ListRepositoryController', [
         });
     };
 
+    $scope.unstar = function(fullname) {
+      var repoName = fullname.split('/');
+      RepositoryService
+        .unStarRepository(repoName[0], repoName[1]);
+    };
+
   }]
 );
