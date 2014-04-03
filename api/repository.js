@@ -82,7 +82,7 @@ module.exports.addTag = function(req, res) {
             if (!err && !repository) {
               repository = new Repository({
                 _creator: user._id,
-                name: repoName,
+                name: repoOwner + '/' + repoName,
                 userName: userName,
                 tags: newTags
               });
