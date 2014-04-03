@@ -58,7 +58,8 @@ module.exports.starred = function(req, res) {
 
 module.exports.addTag = function(req, res) {
   var userName = req.session.userName;
-  var repoName = req.params.id;
+  var repoOwner = req.params.owner;
+  var repoName = req.params.name;
   var newTags = req.body.tags;
 
   var User = mongoose.model('User', UserSchema);
@@ -71,7 +72,7 @@ module.exports.addTag = function(req, res) {
     .exec(function(err, user) {
       Repository
         .findOne({
-          name: repoName,
+          name: repoOwner + '/' + repoName,
           userName: userName
         })
         .exec(function(err, repository) {

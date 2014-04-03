@@ -2,8 +2,12 @@ Application.factory('TagService', function(Restangular) {
 
   this.tags = [];
 
-  function tagRepository(repositoryId, tags) {
-    var repository = Restangular.one('repository', repositoryId).one('tag');
+  function tagRepository(repoOwner, repoName, tags) {
+    var repository = Restangular
+      .one('repository')
+      .one(repoOwner)
+      .one(repoName)
+      .one('tag');
     repository.tags = tags;
     this.tags = _.union(this.tags, tags);
     return repository.put();
