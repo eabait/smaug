@@ -12,6 +12,7 @@ var authUrl = github.auth
 var state = authUrl.match(/&state=([0-9a-z]{32})/i);
 
 module.exports.index = function(req, res) {
+  var User = mongoose.model('User', UserSchema);
   if (req.session.token) {
     res.render('index', {
       userName: req.session.userName,
@@ -30,17 +31,34 @@ module.exports.index = function(req, res) {
             req.session.userName = data.login;
             req.session.userAvatar = data.avatar_url;
 
-            var User = mongoose.model('User', UserSchema);
-            newUser = new User({
-              id: data.id,
-              userName: data.login,
-              userAvatar: data.avatar_url
-            });
-            newUser.save(function() {
-              req.session.save(function(err) {
-                res.redirect('/');
+            var promiseOnUserLookup = User
+              .findOne({
+                userName: data.login
+              })
+              .exec();
+
+            promiseOnUserLookup
+              .then(function(user) {
+                if (!user) {
+                  newUser = new User({
+                    id: data.id,
+                    userName: data.login,
+                    userAvatar: data.avatar_url
+                  });
+                  newUser.save(function() {
+                    req.session.save(function(err) {
+                      res.redirect('/');
+                    });
+                  });
+                } else {
+                  req.session.save(function(err) {
+                    res.redirect('/');
+                  });
+                }
+              })
+              .then(null, function(err) {
+                res.json(500, err);
               });
-            });
           });
         });
       } else {
