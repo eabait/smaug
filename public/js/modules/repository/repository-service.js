@@ -89,4 +89,18 @@ Application.service('RepositoryService', function($q, Restangular) {
       }, this));
   };
 
+  this.removeTagFromRepository = function(repository, tag) {
+    var repoName = repository.full_name.split('/');
+    var baseRepository = Restangular.one('repository');
+    return baseRepository
+      .one(repoName[0])
+      .one(repoName[1])
+      .one(tag)
+      .remove()
+      .then(_.bind(function(updatedRepository) {
+        repository.tags = updatedRepository.tags;
+        return repository;
+      }, this))
+  }
+
 });

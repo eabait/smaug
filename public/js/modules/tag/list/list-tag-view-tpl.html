@@ -7,10 +7,9 @@
     <div class="ui list tag-container">
       <div class="ui loader" ng-class="{false: 'disabled', true: 'active'}[ loading]"></div>
       <div class="item" ng-repeat="tag in tags | filter:search:strict">
-        <div class="ui small black label" ng-click="onTagClick(tag._id)">
+        <div class="ui label" ng-click="onTagClick(tag._id)">
           {{tag._id}}
           <div class="detail">{{tag.count}}</div>
-          <i class="delete icon"></i>
         </div>
       </div>
     </div>

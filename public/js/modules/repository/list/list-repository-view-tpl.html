@@ -1,10 +1,15 @@
 <section class="repo-list" ng-controller="ListRepositoryController" ng-init="initialLoad()">
-  <section class="ui fluid icon input">
+  <section class="ui fluid icon input" ng-hide="repositories.length === 0">
     <input type="text" placeholder="Search by tag name" ng-model="search.tags" model-undefined>
     <i class="search icon"></i>
   </section>
   <section class="ui relaxed divided list">
-    <div class="ui loader" ng-class="{true: 'disabled', false: 'active'}[repositories.length > 0]"></div>
+    <div class="ui loader" ng-class="{false: 'disabled', true: 'active'}[loading]"></div>
+    <div ng-show="repositories.length === 0 && !loading" class="empty-repo-list ">
+      <i class="ui big huge github icon"></i>
+      <div>Looks like somebody is not starring repositories :(</div>
+      <div>Go to <a href="https://github.com/explore">https://github.com/explore</a> and start starring your favorite ones</div>
+    </div>
     <repository ng-repeat="repository in repositories | filter:search:strict"/>
   </section>
   <footer ng-show="repositories.length > 0">

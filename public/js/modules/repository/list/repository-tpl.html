@@ -13,7 +13,7 @@
   </div>
   <div class="repo-tags ui black small labels">
     <div class="ui label" ng-model="repository.tags" ng-repeat="tag in repository.tags">
-      {{tag}} <i class="icon close"></i>
+      {{tag}} <i class="icon close" ng-click="removeTag(repository, tag)"></i>
     </div>
   </div>
 </article>

@@ -56,6 +56,44 @@ module.exports.starred = function(req, res) {
   });
 };
 
+module.exports.removeTag = function(req, res) {
+  var userName = req.session.userName;
+  var repoOwner = req.params.owner;
+  var repoName = req.params.name;
+  var tag = req.params.tag;
+
+  var Repository = mongoose.model('Repository', RepositorySchema);
+
+  var promiseOnFindRepo = Repository.findOne({
+    name: repoOwner + '/' + repoName
+  }).exec();
+
+  promiseOnFindRepo.then(function(repository) {
+    var tagIndex = repository.tags.indexOf(tag);
+    if (tagIndex > -1) {
+      repository.tags.splice(tagIndex, 1);
+    }
+    repository.save(function(err, product, nbrRowAffected) {
+      if (err) {
+        res.json(500, {
+          error: err,
+          find: true,
+          update: false
+        });
+      } else {
+        res.json(200, repository);
+      }
+    });
+  });
+  promiseOnFindRepo.then(null, function(err) {
+    res.json(500, {
+      error: err,
+      find: false,
+      update: false
+    });
+  });
+};
+
 module.exports.addTag = function(req, res) {
   var userName = req.session.userName;
   var repoOwner = req.params.owner;

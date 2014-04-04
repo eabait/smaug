@@ -48,6 +48,7 @@ db.once('open', function() {
   app.get('/repository/starred', repositoryApi.starred);
   app.delete('/repository/starred/:owner/:name', repositoryApi.unStarRepository);
   app.put('/repository/:owner/:name/tag', repositoryApi.addTag);
+  app.delete('/repository/:owner/:name/:tag', repositoryApi.removeTag);
   app.get('/repository/tag/:id', tagApi.findRepositoriesByTag);
   app.get('/tag', tagApi.findAllTags);
 
