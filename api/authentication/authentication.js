@@ -1,7 +1,7 @@
 var github = require('octonode');
-var Config = require('../config');
+var Config = require('../../config');
 var mongoose = require('mongoose');
-var UserSchema = require('../entities/user.schema');
+var UserSchema = require('../../entities/user.schema');
 
 var authUrl = github.auth
   .config({

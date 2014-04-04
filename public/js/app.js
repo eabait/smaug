@@ -7,11 +7,7 @@ var Application = angular.module(
   ]
 );
 
-Application.config(function(RestangularProvider, cfpLoadingBarProvider) {
-  RestangularProvider.setBaseUrl('http://127.0.0.1:3000');//'http://smaug-eabait.rhcloud.com'
-  RestangularProvider.setDefaultHttpFields({
-    cache: false
-  });
+Application.config(function(cfpLoadingBarProvider) {
   cfpLoadingBarProvider.includeSpinner = false;
 });
 

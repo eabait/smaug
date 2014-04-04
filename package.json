@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Smaug web-services",
   "scripts": {
-    "start": "node app.js"
+    "start": "node server.js"
   },
   "main": "app.js",
   "repository": {

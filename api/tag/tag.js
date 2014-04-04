@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var RepositorySchema = require('../entities/repository.schema');
+var RepositorySchema = require('../../entities/repository.schema');
 var _ = require('lodash');
 var github = require('octonode');
 var Q = require('q');

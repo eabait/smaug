@@ -1,7 +1,7 @@
 var github = require('octonode');
 var mongoose = require('mongoose');
-var UserSchema = require('../entities/user.schema');
-var RepositorySchema = require('../entities/repository.schema');
+var UserSchema = require('../../entities/user.schema');
+var RepositorySchema = require('../../entities/repository.schema');
 var _ = require('lodash');
 
 function processStarredRepositories(repositories, userName, cb) {

@@ -11,7 +11,7 @@ pids
 logs
 results
 
-config.js
+keys.js
 
 .DS_Store
 npm-debug.log
