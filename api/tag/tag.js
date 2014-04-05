@@ -34,6 +34,7 @@ module.exports.findAllTags = function(req, res) {
 function getRepositoryInfo(gitHubClient, repository) {
   var deferred = Q.defer();
   var ghRepo = gitHubClient.repo(repository.name);
+  var tags = repository.tags;
   var repository = {};
   ghRepo.info(function(err, ghRepo, headers) {
     if (err) {
@@ -55,9 +56,9 @@ function getRepositoryInfo(gitHubClient, repository) {
       repository.forks_count = ghRepo.forks_count;
       repository.open_issues_count = ghRepo.open_issues_count;
       repository.watchers = ghRepo.watchers;
+      repository.tags = tags;
       deferred.resolve(repository);
     }
-
   });
   return deferred.promise;
 }

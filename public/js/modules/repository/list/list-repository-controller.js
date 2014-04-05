@@ -29,14 +29,12 @@ Application.controller('ListRepositoryController', [
         });
     };
 
-    $scope.unstar = function(fullname) {
-      var repoName = fullname.split('/');
+    $scope.unstar = function(repository) {
       RepositoryService
-        .unStarRepository(repoName[0], repoName[1]);
+        .unStarRepository(repository);
     };
 
     $scope.removeTag = function(repository, tag) {
-      //var repoName = fullname.split('/');
       RepositoryService
         .removeTagFromRepository(repository, tag);
     }

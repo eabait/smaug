@@ -17,10 +17,10 @@ Application.controller('ListTagController', [
         });
     };
 
-    $scope.onTagClick = function(tag) {
+    $scope.onTagClick = function(tag, count) {
       $scope.loading = true;
       RepositoryService
-        .findRepositoriesByTag(tag)
+        .findRepositoriesByTag(tag, count)
         .then(function(repositories) {
           $scope.repositories = repositories;
           $scope.loading = false;

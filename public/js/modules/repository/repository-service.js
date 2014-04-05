@@ -1,13 +1,35 @@
 Application.service('RepositoryService', function($q, Restangular) {
 
+  var PAGE_SIZE = 30;
   this.page = 0;
   this.repositoryCache = [];
+
+  function repositoryComparator(repo1, repo2) {
+    return repo1.full_name === repo2.full_name;
+  }
+
+  function belongsTo(element, collection, comparator) {
+    var result = _.filter(collection, function(collectionElement) {
+      return (comparator(element, collectionElement));
+    });
+    return result.length;
+  }
+
+  function getUnion(collection1, collection2) {
+    if (!collection1.length) {
+      return collection2;
+    }
+    var addToCollection1 = _.filter(collection2, function(element) {
+      return !belongsTo(element, collection1, repositoryComparator);
+    });
+    return collection1.concat(addToCollection1);
+  }
 
   this.findAllRepositories = function(page) {
     var promiseOnFindAllRepositories = $q.defer();
     var baseRepositories = Restangular.all('repository/starred');
 
-    if (page <= this.page) {
+    if (page <= this.page && this.repositoryCache.length === PAGE_SIZE) {
       promiseOnFindAllRepositories.resolve(this.repositoryCache);
     } else {
       baseRepositories
@@ -17,7 +39,7 @@ Application.service('RepositoryService', function($q, Restangular) {
         .then(
           _.bind(
             function(repositories) {
-              this.repositoryCache = _.union(this.repositoryCache, repositories);
+              this.repositoryCache = getUnion(this.repositoryCache, repositories);
               this.page = page;
               promiseOnFindAllRepositories.resolve(this.repositoryCache);
             },
@@ -37,16 +59,17 @@ Application.service('RepositoryService', function($q, Restangular) {
     });
   };
 
-  function requestRepositoriesByTag(tagId) {
+  function requestRepositoriesByTag(tagId, context) {
     var repositoriesByTag = Restangular.all('repository/tag/' + tagId);
     return repositoriesByTag
       .getList()
       .then(function(repositories) {
+        context.repositoryCache = getUnion(context.repositoryCache, repositories);
         return repositories;
       });
   }
 
-  this.findRepositoriesByTag = function(tagId) {
+  this.findRepositoriesByTag = function(tagId, count) {
     var tagged;
     var promiseOnFindTaggedRepositories = $q.defer();
 
@@ -54,16 +77,16 @@ Application.service('RepositoryService', function($q, Restangular) {
       tagged = _.filter(this.repositoryCache, function(repository) {
         return _.indexOf(repository.tags, tagId) !== -1;
       });
-      if (tagged.length > 0) {
+      if (tagged.length === count) {
         promiseOnFindTaggedRepositories.resolve(tagged);
       } else {
-        requestRepositoriesByTag(tagId)
+        requestRepositoriesByTag(tagId, this)
           .then(function(taggedRepositories) {
             promiseOnFindTaggedRepositories.resolve(taggedRepositories);
           });
       }
     } else {
-      requestRepositoriesByTag(tagId)
+      requestRepositoriesByTag(tagId, this)
         .then(function(taggedRepositories) {
           promiseOnFindTaggedRepositories.resolve(taggedRepositories);
         });
@@ -71,7 +94,10 @@ Application.service('RepositoryService', function($q, Restangular) {
     return promiseOnFindTaggedRepositories.promise;
   };
 
-  this.unStarRepository = function(owner, name) {
+  this.unStarRepository = function(repository) {
+    var repoFullName = repository.full_name.split('/');
+    var owner = repoFullName[0];
+    var name = repoFullName[1];
     var baseRepositories = Restangular.one('repository/starred');
     return baseRepositories
       .one(owner)
