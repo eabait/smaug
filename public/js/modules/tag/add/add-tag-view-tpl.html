@@ -1,12 +1,21 @@
-<section class="ui red segment" ng-controller="AddTagController">
+<section class="ui" ng-controller="AddTagController">
   <h3 class="ui red header">{{repository.name}}</h3>
   <p>{{repository.description}}</p>
   <form name="tagform" class="ui form" source="srcTags" tagaction="addTagToRepository" tagmanager>
     <div class="field">
-        <input type="text" placeholder="Add tags!" name="tag">
+      <input type="text" placeholder="Add tags!" name="tag">
     </div>
-    <button class="ui field red icon button">
-      <i class="bookmark icon"></i> Tag me!
-    </button>
+    <div class="inline fields">
+      <div class="field">
+        <button class="ui button add">
+          <i class="add sign icon" data-content="Click to add tag or  press TAB" data-position="top center" popup></i> Add tag
+        </button>
+      </div>
+      <div class="field">
+        <button class="ui primary icon button confirm">
+          <i class="bookmark icon" data-content="Click to confirm the tags" data-position="top center" popup></i> Confirm!
+        </button>
+      </div>
+    </div>
   </form>
 </section>

@@ -35,11 +35,18 @@ Application.directive('tagmanager', function() {
       });
 
     $(element)
-      .find('.button')
+      .find('.confirm')
       .on('click', function() {
         var tags = $('input[type="hidden"]').val();
         tags = tags.toLowerCase();
         scope.tagAction(tags.split(','));
+      });
+
+    $(element)
+      .find('.add')
+      .on('click', function() {
+        var value = $(element).find('input[name="tag"]').val();
+        $(tagInput).tagsManager('pushTag', value);
       });
   }
 

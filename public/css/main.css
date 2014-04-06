@@ -57,6 +57,20 @@ nav .item {
   animation:0.7s fadeOutRight;
 }
 
+.ng-enter {
+  -webkit-animation:0.5s fadeIn;
+  -moz-animation:0.5s fadeIn;
+  -o-animation:0.5s fadeIn;
+  animation:0.5s fadeIn;
+}
+
+.ng-leave {
+  -webkit-animation:0.5s fadeOut;
+  -moz-animation:0.5s fadeOut;
+  -o-animation:0.5s fadeOut;
+  animation:0.5s fadeOut;
+}
+
 @-webkit-keyframes fadeIn {
   0% {
     opacity: 0;
@@ -211,4 +225,8 @@ nav .item {
 
 .repo-by-tag .cell-number {
   text-align: right !important;
+}
+
+.twitter-typeahead {
+  width: 100% !important;
 }
