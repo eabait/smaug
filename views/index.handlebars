@@ -10,6 +10,30 @@
     <link rel="stylesheet" href="vendor/angular-loading-bar/build/loading-bar.css">
     <link rel="stylesheet" href="vendor/tagmanager/tagmanager.css">
     <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body>
+    <header>
+      <nav class="ui inverted red menu" ng-init="selected=1">
+        <a href="https://github.com/{{userName}}" class="menu-avatar item" data-content="Logged as {{userName}}" popup><img ng-src="{{userAvatar}}" class="ui avatar image"></a>
+        <a href="#/repository" class="item" ng-click="selected = 1" ng-class="{'active' : selected == 1}">
+          <i class="folder icon" data-content="Browse your repositories" data-position="bottom center" popup></i> Repositories
+        </a>
+        <a href="#/tag" class="item" ng-click="selected = 2" ng-class="{'active' : selected == 2}">
+          <i class="bookmark icon" data-content="Browser your tags" popup></i> Tags
+        </a>
+
+        <div class="right menu">
+          <a class="ui item visible content" href="http://twitter.com/share?text=I'm using SMAUG to manage my starred GitHub repositories&amp;url=http://smaug-eabait.rhcloud.com&amp;hashtags=#smaug" target="_blank">
+            <i class="twitter sign icon" data-content="Share the love!" data-position="bottom center" popup></i>
+          </a>
+          <a href="/logout" class="ui item visible content">
+            <i class="sign out icon" data-content="Logout" data-position="bottom center" popup></i>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <div class="main-container" ng-view></div>
 
     <script src="vendor/jquery/dist/jquery.js"></script>
     <script src="vendor/lodash/dist/lodash.js"></script>
@@ -35,29 +59,5 @@
     <script src="js/modules/tag/list/list-tag-controller.js"></script>
     <script src="js/modules/tag/add/add-tag-controller.js"></script>
     <script src="js/modules/tag/tag-service.js"></script>
-  </head>
-  <body>
-    <header>
-      <nav class="ui inverted red menu" ng-init="selected=1">
-        <a href="https://github.com/{{userName}}" class="menu-avatar item" data-content="Logged as {{userName}}" popup><img ng-src="{{userAvatar}}" class="ui avatar image"></a>
-        <a href="#/repository" class="item" ng-click="selected = 1" ng-class="{'active' : selected == 1}">
-          <i class="folder icon" data-content="Browse your repositories" data-position="bottom center" popup></i> Repositories
-        </a>
-        <a href="#/tag" class="item" ng-click="selected = 2" ng-class="{'active' : selected == 2}">
-          <i class="bookmark icon" data-content="Browser your tags" popup></i> Tags
-        </a>
-
-        <div class="right menu">
-          <a class="ui item visible content">
-            <i class="twitter sign icon" data-content="Share the love!" data-position="bottom center" popup></i>
-          </a>
-          <a href="/logout" class="ui item visible content">
-            <i class="sign out icon" data-content="Logout" data-position="bottom center" popup></i>
-          </a>
-        </div>
-      </nav>
-    </header>
-
-    <div class="main-container" ng-view></div>
   </body>
 </html>

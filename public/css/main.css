@@ -13,7 +13,18 @@ h5 {
 }
 
 .login {
-  margin: 20% !important;
+  margin: 20% 0 2% 0 !important;
+}
+
+.login > div:first-child {
+  border-right: 1px solid gray;
+}
+
+footer {
+  width: 100%;
+  font-size: 0.8em;
+  text-align: center;
+  color: rgba(0,0,0,.5);
 }
 
 nav .item {

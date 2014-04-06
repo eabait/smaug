@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,19 +12,24 @@
   <body>
 
     <section class="ui two middle aligned column page grid login">
-      <div class="right aligned column" style="border-right: 1px solid gray;">
+      <div class="right aligned column">
         <h1 class="ui red header">
           SMAUG
           <div class="sub header">Manage your starred GitHub repositories</div>
         </h1>
       </div>
-      <div class="column">
-        <a href="{{oauthUrl}}" class="red ui button">
-          <i class="github icon"></i>
+      <div class="column" ng-init="loading = false">
+        <a href="{{oauthUrl}}" class="red ui button" ng-click="loading = true">
+          <i class="icon" ng-class="{true:'loading', false: 'github'}[loading]"></i>
           Sign in
         </a>
       </div>
     </section>
+    <footer>
+      Made by <a href="https://twitter.com/eabait">eabait</a>
+      &#124; <a href="https://github.com/eabait/smaug">fork it</a>
+    </footer>
 
+    <script src="vendor/angular/angular.min.js"></script>
   </body>
 </html>
