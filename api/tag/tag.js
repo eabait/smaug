@@ -40,6 +40,7 @@ function getRepositoryInfo(gitHubClient, repository) {
     if (err) {
       deferred.reject(err);
     } else {
+      repository.id = ghRepo.id;
       repository.name = ghRepo.name;
       repository.full_name = ghRepo.full_name;
       repository.description = ghRepo.description;

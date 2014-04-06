@@ -16,6 +16,7 @@
     "jquery": "1.11.0",
     "angular-loading-bar": "0.3.0",
     "tagmanager": "3.0.1",
-    "typeahead.js": "0.10.2"
+    "typeahead.js": "0.10.2",
+    "angular-animate": "~1.2.16"
   }
 }

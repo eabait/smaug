@@ -38,6 +38,125 @@ nav .item {
   text-align: center;
 }
 
+.item.ng-enter, .item.ng-move {
+  -webkit-animation:0.5s fadeInLeft;
+  -moz-animation:0.5s fadeInLeft;
+  -o-animation:0.5s fadeInLeft;
+  animation:0.5s fadeInLeft;
+}
+
+.item.ng-enter.ng-enter-active,
+.item.ng-move.ng-move-active {
+  opacity:1;
+}
+
+.item.ng-leave {
+  -webkit-animation:0.7s fadeOutRight;
+  -moz-animation:0.7s fadeOutRight;
+  -o-animation:0.7s fadeOutRight;
+  animation:0.7s fadeOutRight;
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-20px);
+    transform: translateX(-20px);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(-20px);
+    -ms-transform: translateX(-20px);
+    transform: translateX(-20px);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+
+@-webkit-keyframes fadeOutRight {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(20px);
+    transform: translateX(20px);
+  }
+}
+
+@keyframes fadeOutRight {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0);
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(20px);
+    -ms-transform: translateX(20px);
+    transform: translateX(20px);
+  }
+}
+
 .ui.small.labels .label, .ui.small.label {
   font-size: 0.5rem;
 }
@@ -84,4 +203,12 @@ nav .item {
 .empty-repo-list {
   margin: 15%;
   text-align: center;
+}
+
+.repo-by-tag h1 {
+  margin-top: 0 !important;
+}
+
+.repo-by-tag .cell-number {
+  text-align: right !important;
 }

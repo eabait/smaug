@@ -7,40 +7,39 @@
     <div class="ui list tag-container">
       <div class="ui loader" ng-class="{false: 'disabled', true: 'active'}[ loading]"></div>
       <div class="item" ng-repeat="tag in tags | filter:search:strict">
-        <div class="ui label" ng-click="onTagClick(tag._id, tag.count)">
+        <div class="ui label" ng-class="{'black' : tag._id === selectedTag}" ng-click="onTagClick(tag._id, tag.count)">
           {{tag._id}}
           <div class="detail">{{tag.count}}</div>
         </div>
       </div>
     </div>
   </aside>
-  <section class="twelve wide column">
-    <section>
-      <div class="ui loader" ng-class="{false: 'disabled', true: 'active'}[loading]"></div>
-      <table class="ui basic table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Created at</th>
-            <th>Last update</th>
-            <th>Stargazers</th>
-            <th>Forks</th>
-            <th>Open Issues</th>
-            <th>Watchers</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="repository in repositories">
-            <td>{{repository.name}}</td>
-            <td>{{repository.created_at}}</td>
-            <td>{{repository.updated_at}}</td>
-            <td>{{repository.stargazers_count}}</td>
-            <td>{{repository.forks_count}}</td>
-            <td>{{repository.open_issues_count}}</td>
-            <td>{{repository.watchers_count}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+  <section class="twelve wide column repo-by-tag">
+    <div class="ui loader" ng-class="{false: 'disabled', true: 'active'}[loading]"></div>
+    <h1 class="ui red header">{{selectedTag}}</h1>
+    <table class="ui basic table" ng-show="repositories.length > 0">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Created at</th>
+          <th>Last update</th>
+          <th class="cell-number">Stargazers</th>
+          <th class="cell-number">Forks</th>
+          <th class="cell-number">Open Issues</th>
+          <th class="cell-number">Watchers</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="repository in repositories">
+          <td>{{repository.name}}</td>
+          <td>{{repository.created_at | date:'shortDate'}}</td>
+          <td>{{repository.updated_at | date:'shortDate'}}</td>
+          <td class="cell-number">{{repository.stargazers_count}}</td>
+          <td class="cell-number">{{repository.forks_count}}</td>
+          <td class="cell-number">{{repository.open_issues_count}}</td>
+          <td class="cell-number">{{repository.watchers_count}}</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 </section>

@@ -3,7 +3,8 @@ var Application = angular.module(
   [
     'restangular',
     'ngRoute',
-    'chieffancypants.loadingBar'
+    'chieffancypants.loadingBar',
+    'ngAnimate'
   ]
 );
 

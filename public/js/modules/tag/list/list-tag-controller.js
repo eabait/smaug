@@ -6,6 +6,7 @@ Application.controller('ListTagController', [
     $scope.repositories = [];
     $scope.tags = [];
     $scope.loading = false;
+    $scope.selectedTag = '';
 
     $scope.initialLoad = function() {
       $scope.loading = true;
@@ -19,6 +20,7 @@ Application.controller('ListTagController', [
 
     $scope.onTagClick = function(tag, count) {
       $scope.loading = true;
+      $scope.selectedTag = tag;
       RepositoryService
         .findRepositoriesByTag(tag, count)
         .then(function(repositories) {
