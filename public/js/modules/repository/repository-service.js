@@ -29,7 +29,7 @@ Application.service('RepositoryService', function($q, Restangular) {
     var promiseOnFindAllRepositories = $q.defer();
     var baseRepositories = Restangular.all('repository/starred');
 
-    if (page <= this.page && this.repositoryCache.length === PAGE_SIZE) {
+    if (page <= this.page && this.repositoryCache.length >= PAGE_SIZE) {
       promiseOnFindAllRepositories.resolve(this.repositoryCache);
     } else {
       baseRepositories
