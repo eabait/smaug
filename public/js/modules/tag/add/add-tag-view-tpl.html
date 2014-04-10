@@ -1,4 +1,4 @@
-<section class="ui" ng-controller="AddTagController">
+<section class="ui" ng-controller="AddTagController" ng-init="initialLoad()">
   <h3 class="ui red header">{{repository.name}}</h3>
   <p>{{repository.description}}</p>
   <form name="tagform" class="ui form" source="srcTags" tagaction="addTagToRepository" tagmanager>
