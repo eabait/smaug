@@ -1,4 +1,4 @@
-<article class="item">
+<article class="item" ng-init="open = false" ng-click="open = !open">
   <a class="right floated item" ng-click="unstar(repository)">
     <i class="star icon" data-content="Unstar me" popup></i>
   </a>
@@ -16,4 +16,12 @@
       {{tag}} <i class="icon close" ng-click="removeTag(repository, tag)"></i>
     </div>
   </div>
+  <section class="repo-detail repo-detail-closed" ng-class="{true: 'repo-detail-open', false: 'repo-detail-closed'}[open]">
+    <div class="repo-tags ui black red labels">
+      Stars <span class="ui circular label">{{repository.stargazers_count}}</span>
+      Forks <span class="ui circular label">{{repository.forks_count}}</span>
+      Issues <span class="ui circular label">{{repository.open_issues_count}}</span>
+      Watchers <span class="ui circular label">{{repository.watchers_count}}</span>
+    </div>
+  </section>
 </article>

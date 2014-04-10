@@ -6,6 +6,9 @@ var Application = angular.module(
     'chieffancypants.loadingBar',
     'ngAnimate'
   ]
+).run(function() {
+  FastClick.attach(document.body);
+  }
 );
 
 Application.config(function(cfpLoadingBarProvider) {

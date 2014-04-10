@@ -29,15 +29,5 @@ Application.controller('ListRepositoryController', [
         });
     };
 
-    $scope.unstar = function(repository) {
-      RepositoryService
-        .unStarRepository(repository);
-    };
-
-    $scope.removeTag = function(repository, tag) {
-      RepositoryService
-        .removeTagFromRepository(repository, tag);
-    }
-
   }]
 );

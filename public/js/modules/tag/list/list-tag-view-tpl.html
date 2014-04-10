@@ -15,9 +15,16 @@
     </div>
   </aside>
   <section class="twelve wide column repo-by-tag">
+    <nav class="ui secondary pointing menu">
+      <a class="item" ng-class="{true: 'active', false: ''}[currentTab === 0]" ng-click="currentTab = 0">Repositories</a>
+      <a class="item" ng-class="{true: 'active', false: ''}[currentTab === 1]" ng-click="currentTab = 1">Comparison</a>
+    </nav>
     <div class="ui loader" ng-class="{false: 'disabled', true: 'active'}[loading]"></div>
-    <h1 class="ui red header">{{selectedTag}}</h1>
-    <table class="ui basic table" ng-show="repositories.length > 0">
+    <h3 class="ui red header">{{selectedTag}}</h3>
+    <section class="ui relaxed divided list" ng-show="currentTab === 0">
+      <repository ng-repeat="repository in repositories"/>
+    </section>
+    <table class="ui basic table" ng-show="repositories.length > 0 && currentTab === 1">
       <thead>
         <tr>
           <th>Name</th>

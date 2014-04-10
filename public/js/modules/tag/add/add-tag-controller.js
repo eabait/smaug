@@ -1,10 +1,10 @@
 Application.controller('AddTagController', [
   '$scope',
   '$routeParams',
-  '$location',
+  '$window',
   'RepositoryService',
   'TagService',
-  function($scope, $routeParams, $locationProvider, RepositoryService, TagService) {
+  function($scope, $routeParams, $window, RepositoryService, TagService) {
     $scope.repository = RepositoryService.findRepository($routeParams.id);
     $scope.srcTags = _.union($scope.repository.description.split(' '));
 
@@ -16,7 +16,7 @@ Application.controller('AddTagController', [
       if (addedTags.length > 0) {
         $scope.repository.tags = _.union($scope.repository.tags, addedTags);
         TagService.tagRepository(repoName[0], repoName[1], addedTags);
-        $locationProvider.path('#/repository');
+        $window.history.back();
       }
     };
   }

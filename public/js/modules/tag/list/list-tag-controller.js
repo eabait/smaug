@@ -7,6 +7,7 @@ Application.controller('ListTagController', [
     $scope.tags = [];
     $scope.loading = false;
     $scope.selectedTag = '';
+    $scope.currentTab = 0;
 
     $scope.initialLoad = function() {
       $scope.loading = true;

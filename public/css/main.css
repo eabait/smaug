@@ -49,6 +49,27 @@ nav .item {
   text-align: center;
 }
 
+.repo-detail {
+  margin-top: 0.5em;
+  margin-left: 2em;
+  font-size: 1.5em !important;
+
+  -webkit-transition:all linear 0.5s;
+  -moz-transition:all linear .05s;
+  -o-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+
+.repo-detail-open {
+  opacity: 1;
+  max-height: 100%;
+}
+
+.repo-detail-closed {
+  opacity:0;
+  max-height: 0;
+}
+
 .item.ng-enter, .item.ng-move {
   -webkit-animation:0.5s fadeInLeft;
   -moz-animation:0.5s fadeInLeft;
@@ -240,4 +261,8 @@ nav .item {
 
 .twitter-typeahead {
   width: 100% !important;
+}
+
+.ui.table {
+  font-size: 0.8em !important;
 }
