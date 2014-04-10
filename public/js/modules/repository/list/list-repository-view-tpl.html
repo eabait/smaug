@@ -7,7 +7,7 @@
     <div class="ui loader" ng-class="{false: 'disabled', true: 'active'}[loading]"></div>
     <div ng-show="repositories.length === 0 && !loading" class="empty-repo-list ">
       <i class="ui big huge github icon"></i>
-      <div>Looks like somebody is not starring repositories :(</div>
+      <div>Looks like you don't have starred repositories :(</div>
       <div>Go to <a href="https://github.com/explore">https://github.com/explore</a> and start starring your favorite ones</div>
     </div>
     <repository ng-repeat="repository in repositories | filter:search:strict"/>
@@ -17,6 +17,7 @@
       <i class="circular github icon"></i>
     </div>
     <div class="ui red button" ng-click="loadMore()">
+      <i class="icon" ng-class="{true:'loading', false: 'add'}[loading]"></i>
       More
     </div>
   </footer>
