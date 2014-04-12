@@ -21,7 +21,12 @@ module.exports.index = function(req, res) {
     });
   } else {
     if (req.query.state && (!state || state[1] != req.query.state)) {
-      res.json(403);
+      var error = new Error();
+      error.status = 403;
+      error.data = {
+        description: 'Failed to sign into GitHub. Invalid state parameter value.'
+      };
+      next(error);
     } else {
       if (req.query.code) {
         github.auth.login(req.query.code, function (err, token) {
@@ -57,7 +62,12 @@ module.exports.index = function(req, res) {
                 }
               })
               .then(null, function(err) {
-                res.json(500, err);
+                var error = new Error();
+                error.status = 500;
+                error.data = {
+                  description: 'Error when retrieving user data form mongodb during login.'
+                };
+                next(error);
               });
           });
         });

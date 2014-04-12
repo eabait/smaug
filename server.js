@@ -18,12 +18,23 @@ var express = require('express'),
 app.use(express.logger());
 app.use(bodyParser());
 app.use(cookieParser());
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
+//Error-handling middleware
+app.use(function(err, req, res, next) {
+  res.status(err.status);
+  res.json(err.data);
+});
 
 mongoose.connect('mongodb://' + Config.MONGO_USERNAME + ':' + Config.MONGO_PASS +
   '@' + Config.MONGO_HOST + ':' + Config.MONGO_PORT + '/smaug');
 db = mongoose.connection;
 
-db.on('error', console.error.bind(console, 'connection error:'));
+db.on('error', function(err) {
+  console.log('Failed to connect to mongodb during application bootstrapping.');
+  console.log(err);
+});
 
 db.once('open', function() {
   app.use(express.session({
@@ -31,17 +42,18 @@ db.once('open', function() {
     secret: Keys.SESSION_SECRET,
     store: new MongoStore({
       mongoose_connection: db
-    }),
-    cookie: {
-      httpOnly: false
-    }
+    })
   }));
+
+  app.use(express.csrf());
+
+  app.use(function(req, res, next) {
+    res.cookie('XSRF-TOKEN', req.csrfToken());
+    next();
+  });
 
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
-
-  app.engine('handlebars', exphbs({defaultLayout: 'main'}));
-  app.set('view engine', 'handlebars');
 
   api = new ApiFacade(app);
 

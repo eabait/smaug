@@ -36,18 +36,25 @@ function processStarredRepositories(repositories, userName, cb) {
           tags: exists ? exists.tags : []
         }
       });
+      //TODO handle error case, maybe cb(null, error)
       cb(res);
     });
 }
 
-module.exports.starred = function(req, res) {
+module.exports.starred = function(req, res, next) {
   var token = req.session.token;
   var page = req.query.page ? req.query.page : 1;
   var gitHubClient = github.client(token).me();
 
   gitHubClient.starred(page, function(err, data, headers) {
     if (err) {
-      res.json(500, err);
+      var error = new Error();
+      error.status = 500;
+      error.data = {
+        description: 'Error when fetching github data.',
+        source: err
+      };
+      next(error);
     } else {
       processStarredRepositories(data, req.session.userName, function(data) {
         res.json(200, data);
@@ -56,7 +63,7 @@ module.exports.starred = function(req, res) {
   });
 };
 
-module.exports.removeTag = function(req, res) {
+module.exports.removeTag = function(req, res, next) {
   var userName = req.session.userName;
   var repoOwner = req.params.owner;
   var repoName = req.params.name;
@@ -75,26 +82,30 @@ module.exports.removeTag = function(req, res) {
     }
     repository.save(function(err, product, nbrRowAffected) {
       if (err) {
-        res.json(500, {
-          error: err,
-          find: true,
-          update: false
-        });
+        var error = new Error();
+        error.status = 500;
+        error.data = {
+          description: 'Failed to update repository.',
+          source: err
+        };
+        next(error);
       } else {
         res.json(200, repository);
       }
     });
   });
   promiseOnFindRepo.then(null, function(err) {
-    res.json(500, {
-      error: err,
-      find: false,
-      update: false
-    });
+    var error = new Error();
+    error.status = 500;
+    error.data = {
+      description: 'Failed to find repository.',
+      source: err
+    };
+    next(error);
   });
 };
 
-module.exports.addTag = function(req, res) {
+module.exports.addTag = function(req, res, next) {
   var userName = req.session.userName;
   var repoOwner = req.params.owner;
   var repoName = req.params.name;
@@ -103,40 +114,61 @@ module.exports.addTag = function(req, res) {
   var User = mongoose.model('User', UserSchema);
   var Repository = mongoose.model('Repository', RepositorySchema);
 
-  User
+  var promiseOnRepositoryFind;
+  var promiseOnUserFind;
+
+  promiseOnUserFind = User
     .findOne({
       userName: userName
     })
-    .exec(function(err, user) {
-      Repository
-        .findOne({
+    .exec();
+
+  promiseOnUserFind.then(function(user) {
+    promiseOnRepositoryFind = Repository
+      .findOne({
+        name: repoOwner + '/' + repoName,
+        userName: userName
+      })
+      .exec();
+
+    promiseOnRepositoryFind.then(function(repository) {
+      if (repository) {
+        repository.tags = _.union(repository.tags, newTags);
+      } else {
+        repository = new Repository({
+          _creator: user._id,
           name: repoOwner + '/' + repoName,
-          userName: userName
-        })
-        .exec(function(err, repository) {
-          if (!err && repository) {
-            repository.tags = _.union(repository.tags, newTags);
-          } else {
-            if (!err && !repository) {
-              repository = new Repository({
-                _creator: user._id,
-                name: repoOwner + '/' + repoName,
-                userName: userName,
-                tags: newTags
-              });
-              user.repositories.push(repository);
-              user.save();
-            }
-          }
-          if (!err) {
-            repository.save(function(err) {
-              res.json(200, repository);
-            });
-          } else {
-            res.json(500, err);
-          }
+          userName: userName,
+          tags: newTags
         });
+        user.repositories.push(repository);
+        user.save();
+      }
+      repository.save(function(err) {
+        res.json(200, repository);
+      });
     });
+
+    promiseOnRepositoryFind.then(null, function(err) {
+      var error = new Error();
+      error.status = 404;
+      error.data = {
+        description: 'Failed to find user repositories.',
+        source: err
+      };
+      next(error);
+    });
+  });
+
+  promiseOnUserFind.then(null, function(err) {
+    var error = new Error();
+    error.status = 404;
+    error.data = {
+      description: 'Failed to find user.',
+      source: err
+    };
+    next(error);
+  });
 };
 
 module.exports.unStarRepository = function(req, res) {

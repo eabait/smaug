@@ -4,11 +4,11 @@ var _ = require('lodash');
 var github = require('octonode');
 var Q = require('q');
 
-module.exports.findAllTags = function(req, res) {
+module.exports.findAllTags = function(req, res, next) {
   var userName = req.session.userName;
   var Repository = mongoose.model('Repository', RepositorySchema);
 
-  Repository
+  var promiseOnRepositoryAggregation = Repository
     .aggregate({
       $match: {
         userName: userName
@@ -25,10 +25,21 @@ module.exports.findAllTags = function(req, res) {
     .sort({
       count: 'desc'
     })
-    .exec(function(err, result) {
-      res.json(200, result);
-    });
+    .exec();
 
+  promiseOnRepositoryAggregation.then(function(result) {
+    res.json(200, result);
+  });
+
+  promiseOnRepositoryAggregation.then(null, function(err) {
+    var error = new Error();
+    error.status = 500;
+    error.data = {
+      description: 'Failed to process repository aggregation of repositories.',
+      source: err
+    };
+    next(error);
+  });
 };
 
 function getRepositoryInfo(gitHubClient, repository) {
@@ -64,29 +75,49 @@ function getRepositoryInfo(gitHubClient, repository) {
   return deferred.promise;
 }
 
-module.exports.findRepositoriesByTag = function(req, res) {
+module.exports.findRepositoriesByTag = function(req, res, next) {
   var userName = req.session.userName;
   var tags = req.params.id;
   var token = req.session.token;
   var gitHubClient = github.client(token);
   var Repository = mongoose.model('Repository', RepositorySchema);
 
-  Repository
+  var promiseOnUserFind = Repository
     .find({
       userName: userName,
       tags: {
         $in: [tags]
       }
     })
-    .exec(function(err, result) {
-      var ghRequestPromiseArray = _.map(result, function(repository) {
-        return getRepositoryInfo(gitHubClient, repository);
-      });
-      Q
-        .all(ghRequestPromiseArray)
-        .then(function(repositories) {
-          res.json(200, repositories);
-        });
-    });
+    .exec();
 
+  promiseOnUserFind.then(function(result) {
+    var ghRequestPromiseArray = _.map(result, function(repository) {
+      return getRepositoryInfo(gitHubClient, repository);
+    });
+    Q
+      .all(ghRequestPromiseArray)
+      .then(function(repositories) {
+        res.json(200, repositories);
+      })
+      .then(null, function(err) {
+        var error = new Error();
+        error.status = 500;
+        error.data = {
+          description: 'Failed to fetch repository data from github.',
+          source: err
+        };
+        next(error);
+      });
+  });
+
+  promiseOnUserFind.then(null, function(err) {
+    var error = new Error();
+    error.status = 404;
+    error.data = {
+      description: 'Failed to find user repositories.',
+      source: err
+    };
+    next(error);
+  });
 };
