@@ -4,12 +4,13 @@ var Application = angular.module(
     'restangular',
     'ngRoute',
     'chieffancypants.loadingBar',
-    'ngAnimate'
+    'ngAnimate',
+    'angulartics',
+    'angulartics.mixpanel'
   ]
 ).run(function() {
   FastClick.attach(document.body);
-  }
-);
+});
 
 Application.config(function(cfpLoadingBarProvider) {
   cfpLoadingBarProvider.includeSpinner = false;

@@ -18,6 +18,10 @@
     "tagmanager": "3.0.1",
     "typeahead.js": "0.10.2",
     "angular-animate": "~1.2.16",
-    "fastclick": "~1.0.1"
+    "fastclick": "~1.0.1",
+    "angulartics": "~0.14.15"
+  },
+  "resolutions": {
+    "angular": "1.2.15"
   }
 }
