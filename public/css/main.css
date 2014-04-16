@@ -12,6 +12,11 @@ h5 {
   margin-bottom: 1em;
 }
 
+sup {
+  top: -1.5em;
+  font-size: 0.4em;
+}
+
 .login {
   margin: 20% 0 2% 0 !important;
 }
