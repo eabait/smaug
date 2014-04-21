@@ -126,7 +126,7 @@ Application.service('RepositoryService', function($q, Restangular) {
       .then(_.bind(function(updatedRepository) {
         repository.tags = updatedRepository.tags;
         return repository;
-      }, this))
-  }
+      }, this));
+  };
 
 });

@@ -14,7 +14,7 @@ Application.controller('ListRepositoryController', [
         .findAllRepositories($scope.page)
         .then(function(repositories) {
           $scope.loading = false;
-          $scope.repositories = repositories
+          $scope.repositories = repositories;
         });
     };
 

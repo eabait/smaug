@@ -42,7 +42,7 @@ Application.service('TagService', function(Restangular) {
     repository.tags = tags;
     addAllTags.call(this, tags);
     return repository.put();
-  }
+  };
 
   this.findAllTags = function() {
     var baseTags = Restangular.all('tag');

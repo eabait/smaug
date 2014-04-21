@@ -15,5 +15,5 @@ Application.directive('popup', function() {
   return {
     restrict: 'A',
     link: link
-  }
+  };
 });

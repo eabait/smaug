@@ -34,7 +34,7 @@ function processStarredRepositories(repositories, userName, cb) {
           open_issues_count: repository.open_issues_count,
           watchers: repository.watchers,
           tags: exists ? exists.tags : []
-        }
+        };
       });
       //TODO handle error case, maybe cb(null, error)
       cb(res);

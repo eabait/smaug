@@ -7,5 +7,5 @@ Application.directive('modelUndefined', function() {
          return val === '' ? undefined : val;
       });
     }
-  }
+  };
 });

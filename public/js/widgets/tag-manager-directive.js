@@ -60,5 +60,5 @@ Application.directive('tagmanager', function() {
       tagOutput: '=output',
       tagAction: '=tagaction'
     }
-  }
+  };
 });

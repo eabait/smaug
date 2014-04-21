@@ -46,7 +46,6 @@ function getRepositoryInfo(gitHubClient, repository) {
   var deferred = Q.defer();
   var ghRepo = gitHubClient.repo(repository.name);
   var tags = repository.tags;
-  var repository = {};
   ghRepo.info(function(err, ghRepo, headers) {
     if (err) {
       deferred.reject(err);
